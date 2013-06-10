@@ -1,6 +1,7 @@
 package com.github.matt.williams.glass;
 
 import android.content.res.Resources;
+import android.graphics.Rect;
 
 import com.github.matt.williams.android.ar.CameraBillboard;
 import com.github.matt.williams.android.gl.FragmentShader;
@@ -17,8 +18,8 @@ public class EdgeBillboard extends CameraBillboard {
     }
 
     @Override
-    public void render(Projection camera, Projection projection) {
-        mProgram.setUniform("duv", 1.0f / 640.0f, 1.0f / 360.0f);
-        super.render(camera, projection);
+    public void render(Projection camera, Projection projection, Rect rect) {
+        mProgram.setUniform("duv", 1.0f / (rect.right - rect.left), 1.0f / (rect.bottom - rect.top));
+        super.render(camera, projection, rect);
     }
 }
