@@ -3,7 +3,7 @@ package com.github.matt.williams.glass;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.github.matt.williams.android.ar.CameraBillboard;
+import com.github.matt.williams.android.ar.Renderable;
 
 public class CameraView extends com.github.matt.williams.android.ar.CameraView {
 
@@ -16,7 +16,7 @@ public class CameraView extends com.github.matt.williams.android.ar.CameraView {
     }
 
     @Override
-    public CameraBillboard createBillboard() {
+    public Renderable createBillboard() {
         return new EdgeBillboard(getResources(), getTexture());
     }
 }
