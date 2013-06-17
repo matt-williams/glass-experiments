@@ -5,8 +5,7 @@ import android.util.AttributeSet;
 
 import com.github.matt.williams.android.ar.Renderable;
 
-public class CameraView extends com.github.matt.williams.android.ar.CameraView {
-
+public class CameraView extends CalibratedCameraView {
     public CameraView(Context context) {
         super(context);
     }
@@ -17,6 +16,6 @@ public class CameraView extends com.github.matt.williams.android.ar.CameraView {
 
     @Override
     public Renderable createBillboard() {
-        return new EdgeBillboard(getResources(), getTexture());
+        return new FragmentShaderBillboard(getResources(), getTexture(), R.string.skinFragmentShader);
     }
 }

@@ -20,11 +20,30 @@ highp float diff(highp vec2 pos, highp vec2 dpos) {
 }
 
 highp float grad(highp vec2 pos, highp vec2 dpos) {
-  return pow(diff(pos, vec2(dpos.x, 0)), 2.0) + pow(diff(pos, vec2(0, dpos.y)), 2.0);
+  return pow(pow(diff(pos, vec2(dpos.x, 0)), 2.0) + pow(diff(pos, vec2(0, dpos.y)), 2.0), 0.5);
 }
 
 void main() {
   gl_FragColor = pix(grad(uv2, duv));
+}
+]]></string>
+
+<string name="skinFragmentShader"><![CDATA[
+#extension GL_OES_EGL_image_external : enable\n
+
+varying highp vec2 uv2;
+uniform samplerExternalOES texture;
+uniform highp vec2 duv;
+
+highp float skin() {
+  highp vec3 rgb = 0.5 * texture2D(texture, uv2).rgb + 0.125 * (texture2D(texture, uv2 - duv.x).rgb + texture2D(texture, uv2 + duv.x).rgb + texture2D(texture, uv2 - duv.y).rgb + texture2D(texture, uv2 + duv.y).rgb);
+  highp float y = dot(rgb, vec3(0.299, 0.114, 0.587));
+  highp vec3 yuv = vec3(y, (0.492 / 0.436 / 2.0) * (rgb.b - y) + 0.5, (0.877 / 0.615 / 2.0) * (rgb.r - y) + 0.5);
+  return step(0.05, 4.0 * (yuv.g - 0.48) * (yuv.g - 0.48) + 4.0 * (yuv.z - 0.585) * (yuv.z - 0.585));
+}
+
+void main() {
+  gl_FragColor = vec4(vec3(skin()), 1);
 }
 ]]></string>
 

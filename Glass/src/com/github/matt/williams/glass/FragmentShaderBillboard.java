@@ -10,10 +10,10 @@ import com.github.matt.williams.android.gl.Projection;
 import com.github.matt.williams.android.gl.Texture;
 import com.github.matt.williams.android.gl.VertexShader;
 
-public class EdgeBillboard extends CameraBillboard {
-    public EdgeBillboard(Resources resources, Texture texture) {
+public class FragmentShaderBillboard extends CameraBillboard {
+    public FragmentShaderBillboard(Resources resources, Texture texture, int fragmentShaderId) {
         super(new Program(new VertexShader(resources.getString(com.github.matt.williams.android.ar.R.string.cameraBillboardVertexShader)),
-                          new FragmentShader(resources.getString(R.string.edgeFragmentShader))),
+                          new FragmentShader(resources.getString(fragmentShaderId))),
               texture);
     }
 
